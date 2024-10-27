@@ -42,7 +42,7 @@ const PaymentScreen = () => {
                 <FormCheckLabel className='ms-3'>PayPal</FormCheckLabel>
                 </Form.Group>
                 <Form.Group controlId='Card' className='my-3'>
-                <FormCheckInput  type='radio'  value='Card' checked={checked === 'Card'} onChange={(e) => setChecked(e.target.value)}></FormCheckInput>
+                <FormCheckInput  type='radio' disabled value='Card' checked={checked === 'Card'} onChange={(e) => setChecked(e.target.value)}></FormCheckInput>
                 <FormCheckLabel className='ms-3'>Credit Card or Debit Card</FormCheckLabel>
                 </Form.Group>
             </FormCheck>

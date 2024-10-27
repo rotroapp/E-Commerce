@@ -112,9 +112,6 @@ export const updateUserProfile = asyncHandler(async (req, res, next) => {
     }else{
         return next(new ErrorResponse(401, "Pls provide valid current Password"));
     }
-
-    
-
 })
 
 
@@ -125,7 +122,25 @@ export const updateUserProfile = asyncHandler(async (req, res, next) => {
 
 export const updateUser = asyncHandler(async (req, res, next) => {
     
-    res.status(200).json('user profile update ')
+    const user = await User.findById(req.params.id);
+    if(user){
+        user.name = req.body.name || user.name;
+        user.email = req.body.email || user.email;
+        user.isAdmin = Boolean(req.body.isAdmin) 
+        
+        const updateUser = await user.save();
+        
+        res.status(200).json({
+        _id:updateUser._id,
+        name: updateUser.name,
+        email:updateUser.email,
+        isAdmin:updateUser.isAdmin
+    })
+    }
+    else{
+        return (new next(ErrorResponse(401, "User not found!")))
+    }
+    
 })
 
 
@@ -134,8 +149,8 @@ export const updateUser = asyncHandler(async (req, res, next) => {
 //@access PRIVATE/ADMIN
 
 export const getUsers = asyncHandler(async (req, res, next) => {
-    
-    res.status(200).json('users get ')
+    const users = await User.find({});
+    res.status(200).json(users)
 })
 
 //@desc Get User by Id
@@ -143,8 +158,10 @@ export const getUsers = asyncHandler(async (req, res, next) => {
 //@access PRIVATE/ADMIN
 
 export const getUserId = asyncHandler(async (req, res, next) => {
-    
-    res.status(200).json('get user')
+    const id = req.params.id;
+    const user = await User.findById(id);
+    if(!user) return(next(new ErrorResponse(401, "User not Found")));
+    res.status(200).json(user)
 })
 
 
@@ -154,8 +171,12 @@ export const getUserId = asyncHandler(async (req, res, next) => {
 //@access PRIVATE/ADMIN
 
 export const deleteUser = asyncHandler(async (req, res, next) => {
-    
-    res.status(200).json('delete user')
+    const id = req.params.id;
+    const user = await User.findById(id);
+    if(!user) return(next(new ErrorResponse(401, "User not Found")));
+    if(user.isAdmin) return(next(new ErrorResponse(400, "Cannot delete Admin")))
+    await User.deleteOne({_id: user._id});
+    res.status(200).json('User Deleted');
 })
 
 

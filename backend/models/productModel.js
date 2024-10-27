@@ -17,7 +17,7 @@ const reviewSchema = new Schema({
         required: true,
     } ,
 
-    User: {
+    user: {
         type: mongoose.Schema.ObjectId,
         required: true,
         ref: "User"

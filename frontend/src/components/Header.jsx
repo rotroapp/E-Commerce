@@ -8,6 +8,8 @@ import { resetCredential } from '../store/authSilce';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { MdAdminPanelSettings } from "react-icons/md";
+import SearchBar from './SearchBar';
+import { clearCartItems, shippingAddress } from '../store/cartSlice';
 
 const Header = () => {
     const [logout] = useLogoutMutation();
@@ -29,9 +31,11 @@ const Header = () => {
             console.log("entered 1");
             
             const res = await logout().unwrap(); // Await logout response
-            console.log("r r", res);
+            // console.log("r r", res);
             
             dispatch(resetCredential()); // Reset credentials
+            dispatch(shippingAddress(null)); 
+            dispatch(clearCartItems());
             navigate('/login'); // Navigate to login page
             toast.success("LogOut Successful!"); // Show success toast
         } catch (e) {
@@ -45,7 +49,7 @@ const Header = () => {
      <header>
         <Navbar bg='secondary ' variant='dark' expand="md">
             <Container>
-            <LinkContainer to={loginblock ? '/login': '/'} >
+            <LinkContainer to={loginblock ? '/login': '/page/1'} >
             <Navbar.Brand>
            <img src='/eos.svg' /> 
            <h1 className='fw-light fs-6 mx-1 d-inline-block'>ProShop </h1>        
@@ -55,9 +59,10 @@ const Header = () => {
             <Navbar.Toggle aria-controls='basic-navbar-nav' />
             <Navbar.Collapse id='basic-navbar-nav'>
             <Nav className='ms-auto '>
+            <SearchBar/>
             {userInfo && userInfo.isAdmin && (
                 <NavDropdown title={<MdAdminPanelSettings size={30}/>} id='adminmenu'>
-                    <LinkContainer to="/admin/productlist">
+                    <LinkContainer to="/admin/productlist/1">
                       <NavDropdown.Item>Products</NavDropdown.Item>
                     </LinkContainer>
                     <LinkContainer to="/admin/userlist">
@@ -68,6 +73,7 @@ const Header = () => {
                     </LinkContainer>
                 </NavDropdown>
             )}
+
             <LinkContainer disabled={loginblock} to="/cart" style={{position:"relative"}}>
             <Nav.Link >
             <FaShoppingCart style={{zIndex:"2", position:"relative"}} /> Cart

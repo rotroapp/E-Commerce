@@ -1,6 +1,5 @@
 import dotenv from "dotenv"
 dotenv.config();
-
 import products from "./data/products.js";
 import Product from "./models/productModel.js";
 import color from "colors";

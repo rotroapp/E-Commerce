@@ -17,7 +17,7 @@ const OrderScreen = () => {
     const [payOrder, {isLoading: loadingpay}] = usePayOrderMutation();
     const [updateDeliver, {isLoading: deliverloading}]= useUpdateDeliverMutation();
     const {data:paypal, isLoading: loadingPaypal, error: errorPaypal} = useGetPayPalClientIdQuery(); 
-    const {userInfo} = useSelector((state) => state.auth)
+    const {userInfo} = useSelector((state) => state.auth);
     
     
     const handelDeliver = async () => {
@@ -181,7 +181,7 @@ const OrderScreen = () => {
                         {loadingpay && <Loader/>}
                         {isPending? <Loader /> : (
                             <div>
-                                <Button onClick={onApproveTest} style={{marginBottom:"10px"}}>Test Order Pay</Button>
+                                {/* <Button onClick={onApproveTest} style={{marginBottom:"10px"}}>Test Order Pay</Button> */}
                                  <div>
                                  <PayPalButtons createOrder={createOrder} onApprove={onApprove} onError={onError}></PayPalButtons>
                                  </div>

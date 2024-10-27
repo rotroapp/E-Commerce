@@ -3,7 +3,7 @@ import { useGetOrdersQuery } from '../store/orderApiSlice';
 import Loader from '../components/Loader';
 import Message from '../components/Message';
 import { Button, Table } from 'react-bootstrap';
-import { FaEdit, FaTimesCircle } from "react-icons/fa";
+import { FaTimesCircle } from "react-icons/fa";
 import { LinkContainer } from 'react-router-bootstrap';
 
 
@@ -15,7 +15,7 @@ const OrderListScreen = () => {
    <>
     <h1>Orders</h1>
     {isLoading ? <Loader />  :  error ? 
-    <Message variant={"danger"}>{error.data.error}</Message>: (
+    <Message variant={"danger"}>{error.data.error || error.status}</Message>: (
         <Table striped hover responsive className="table-sm">
          <thead>
             <tr>
