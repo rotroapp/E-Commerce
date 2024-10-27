@@ -53,7 +53,7 @@ const ProductEditScreen = () => {
          try{
             await updateproduct(updateProduct).unwrap(); 
             toast.success("Product update");
-            navigate('/admin/productlist');
+            navigate('/admin/productlist/1');
          }catch(err){
             console.log(err)
             toast.error(err?.data?.error || err?.error);
@@ -74,7 +74,7 @@ const ProductEditScreen = () => {
 
   return (
     <>
-    <Link to='/admin/productlist' className='btn btn-outline-dark my-3 border'>
+    <Link to='/admin/productlist/1' className='btn btn-outline-dark my-3 border'>
         Go Back
     </Link>
     <FormContainer>

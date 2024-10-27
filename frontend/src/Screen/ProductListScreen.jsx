@@ -19,7 +19,7 @@ const ProductListScreen = () => {
   const {pageNumber} = useParams()
   const [createProduct, { isLoading: loadingcreate }] =
   useCreateProductsMutation();
-  const { data, isLoading, error, refetch } = useGetProductsQuery(pageNumber);
+  const { data, isLoading, error, refetch } = useGetProductsQuery({pageNumber});
   const [deleteproduct, {isLoading:deleteloading}] = useDeleteProductMutation();
   
 

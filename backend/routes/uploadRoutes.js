@@ -35,7 +35,7 @@ router.post('/', upload.single('image'), (req,res)=>{
     console.log("img path", imagepath)
     console.log("fil  ",req.file)
     res.send({msg : 'Image uploaded',
-        image: `http://localhost:8000/${imagepath}`
+        image: `${req.protocol}://${req.get('host')}/${imagepath}`
     })
 });
 
